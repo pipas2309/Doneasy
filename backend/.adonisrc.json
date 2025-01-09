@@ -1,9 +1,7 @@
 {
   "typescript": true,
   "commands": [
-    "./commands",
-    "@adonisjs/core/build/commands/index.js",
-    "@adonisjs/repl/build/commands"
+    "@adonisjs/core/commands"
   ],
   "exceptionHandlerNamespace": "App/Exceptions/Handler",
   "aliases": {
@@ -18,7 +16,15 @@
   ],
   "providers": [
     "./providers/AppProvider",
-    "@adonisjs/core"
+    "@adonisjs/core/providers/app_provider",
+    "@adonisjs/core/providers/hash_provider",
+    {
+      "file": "@adonisjs/core/providers/repl_provider",
+      "environment": [
+        "repl",
+        "test"
+      ]
+    }
   ],
   "aceProviders": [
     "@adonisjs/repl"
