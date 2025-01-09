@@ -1,0 +1,44 @@
+# Node dependencies
+node_modules
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.yarn-integrity
+.pnpm-debug.log*
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+
+# AdonisJS
+build
+tmp
+.env
+.env.*
+!.env.example
+coverage
+ace-manifest.json
+
+# Editor/IDE
+.vscode/
+.idea/
+.fleet
+
+# Sistema operacional
+.DS_Store
+
+# Miscelânea
+.pnp.*

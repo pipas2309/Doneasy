@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:14
+    container_name: doneasy_db
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./backend/.env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    container_name: doneasy_backend
+    ports:
+      - "3333:3333"
+    depends_on:
+      - database
+    env_file:
+      - ./backend/.env
+    environment:
+      DB_CONNECTION: ${DB_CONNECTION}
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      NODE_ENV: development
+    volumes:
+      - ./backend:/app
+    working_dir: /app
+    command: ["node", "ace", "serve", "--watch"]
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: doneasy_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    env_file:
+      - ./frontend/.env
+    environment:
+      NUXT_APP_API_URL: ${NUXT_APP_API_URL}
+      NODE_ENV: development
+    volumes:
+      - ./frontend:/app
+    working_dir: /app
+    command: ["npm", "run", "dev"]
+    restart: unless-stopped
+
+volumes:
+  pg-data:
