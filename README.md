@@ -9,16 +9,17 @@
 6. [Padrão de Commits](#padrão-de-commits)
 7. [Scripts Disponíveis](#scripts-disponíveis)
 8. [Features Futuras](#features-futuras)
-9. [Licença](#licença)
+9. [Versionamento](#versionamento)
+10. [Licença](#licença)
 
 ---
 
-## Descrição
+## Descrição [↑](#índice)
 Doneasy é um projeto para gerenciar tarefas com funcionalidades básicas como autenticação, CRUD de tarefas, reordenação de tarefas via drag-and-drop e modais para detalhes das tarefas. O projeto será desenvolvido em TypeScript com Adonis.js para o back-end e Nuxt.js para o front-end, utilizando boas práticas como commits padronizados, testes e integração contínua.
 
 ---
 
-## Stack Tecnológica
+## Stack Tecnológica [↑](#índice)
 - **Back-end**: Adonis.js (TypeScript)
 - **Front-end**: Nuxt.js (TypeScript)
 - **Banco de Dados**: PostgreSQL (Docker)
@@ -30,7 +31,7 @@ Doneasy é um projeto para gerenciar tarefas com funcionalidades básicas como a
 
 ---
 
-## Funcionalidades do MVP
+## Funcionalidades do MVP [↑](#índice)
 1. Autenticação de usuários (login e registro).
 2. CRUD de tarefas com os seguintes campos:
     - Título
@@ -46,7 +47,7 @@ Doneasy é um projeto para gerenciar tarefas com funcionalidades básicas como a
 
 ---
 
-## Pré-requisitos
+## Pré-requisitos [↑](#índice)
 - Node.js (versão LTS)
 - Docker e Docker Compose
 - Editor de código (recomendado: VS Code)
@@ -54,7 +55,7 @@ Doneasy é um projeto para gerenciar tarefas com funcionalidades básicas como a
 
 ---
 
-## Passos para Configuração Local
+## Passos para Configuração Local [↑](#índice)
 ### 1. Clonar o repositório
 ```bash
 git clone https://github.com/usuario/doneasy.git
@@ -86,7 +87,7 @@ Abra o navegador e acesse `http://localhost:3000` para visualizar o front-end.
 
 ---
 
-## Padrão de Commits
+## Padrão de Commits [↑](#índice)
 Este projeto utiliza o padrão [Conventional Commits](https://www.conventionalcommits.org/).
 
 Exemplos de mensagens:
@@ -97,7 +98,7 @@ Exemplos de mensagens:
 
 ---
 
-## Scripts Disponíveis
+## Scripts Disponíveis [↑](#índice)
 ### Back-end
 - `npm run dev` - Inicia o servidor Adonis.js em modo de desenvolvimento.
 - `node ace migration:run` - Executa as migrations no banco de dados.
@@ -109,12 +110,26 @@ Exemplos de mensagens:
 
 ---
 
-## Features Futuras
+## Features Futuras [↑](#índice)
 1. Upload de imagens para anexos nas tarefas.
 2. Integração com IA para análise e criação automática de tarefas.
 3. Notificações via e-mail para tarefas vencidas.
 
 ---
 
-## Licença
+## Versionamento [↑](#índice)
+Este projeto segue o padrão **Semantic Versioning [SemVer](https://semver.org/lang/pt-BR/)**. O controle da versão é gerenciado através de um arquivo `VERSION` localizado na raiz do projeto. As versões são incrementadas de acordo com as seguintes regras:
+
+- **MAJOR**: Mudanças incompatíveis com versões anteriores.
+- **MINOR**: Novas funcionalidades adicionadas de forma retrocompatível.
+- **PATCH**: Correções de bugs ou pequenas melhorias retrocompatíveis.
+
+### Exemplos de versões:
+- `1.0.0`: Primeira versão estável.
+- `1.1.0`: Nova funcionalidade adicionada.
+- `1.1.1`: Correção de bug.
+
+---
+
+## Licença [↑](#índice)
 Este projeto está sob a licença aberta, mas o uso comercial não é permitido. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
