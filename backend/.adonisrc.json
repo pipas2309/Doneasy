@@ -4,12 +4,6 @@
     "@adonisjs/core/commands"
   ],
   "exceptionHandlerNamespace": "App/Exceptions/Handler",
-  "aliases": {
-    "App": "app",
-    "Config": "config",
-    "Database": "database",
-    "Contracts": "contracts"
-  },
   "preloads": [
     "./start/routes",
     "./start/kernel"
