@@ -26,10 +26,10 @@ export default class User extends compose(BaseModel, AuthFinder) {
     declare rememberMeToken: string | null
 
     @column()
-    public username: string | null
+    declare username: string | null
 
     @column()
-    public cpf: string | null
+    declare cpf: string | null
 
     @column.dateTime({ autoCreate: true })
     declare createdAt: DateTime
