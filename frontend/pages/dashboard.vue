@@ -158,111 +158,122 @@ async function changeTaskColor(color: string) {
 </script>
 
 <template>
+    <!-- Envólucro geral -->
     <div>
-        <h1 class="text-2xl font-bold mb-4">
-            Tarefas de {{ userName }}
-        </h1>
-
-        <header class="flex justify-between items-center mb-4">
-            <h1 class="text-2xl font-bold">Dashboard</h1>
+        <!-- Título ou cabeçalho da página -->
+        <header class="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center mb-6">
+            <h1 class="text-3xl font-bold">Dashboard</h1>
             <button
-                class="bg-blue-500 text-white px-4 py-2 rounded"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded transition"
                 @click="openAddTaskModal"
             >
                 + Adicionar Tarefa
             </button>
         </header>
 
-        <p v-if="errorMessage" class="text-red-500 mb-2">
+        <!-- Mensagem de erro -->
+        <p v-if="errorMessage" class="text-red-500 mb-4">
             {{ errorMessage }}
         </p>
 
-        <TaskList :tasks="tasks" :doReorder="doReorder" @taskClicked="onTaskClicked" />
+        <!-- Lista de tarefas -->
+        <TaskList
+            :tasks="tasks"
+            :doReorder="doReorder"
+            @taskClicked="onTaskClicked"
+        />
 
-        <!-- Modal de detalhes da tarefa-->
-        <div
-            v-if="showDetailModal"
-            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-            @click.self="closeDetail"
-        >
-            <div class="bg-white p-6 rounded shadow w-full max-w-md">
-                <!-- Bloco com título e seletor de cor -->
-                <div class="flex justify-between items-center">
+        <!-- Modal de detalhes -->
+        <transition name="fade">
+            <div
+                v-if="showDetailModal"
+                class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+                @click.self="closeDetail"
+            >
+                <div class="bg-white p-6 rounded shadow-md w-full max-w-md">
+                    <!-- Título e ícone de cor -->
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-bold">{{ selectedTask?.title }}</h2>
 
-                    <h2 class="text-xl font-bold mb-2">{{ selectedTask?.title }}</h2>
-                    <!-- Botão para abrir o seletor de cores -->
-                    <div class="relative">
-                        <div
-                            :style="{ backgroundColor: selectedTask?.color }"
-                            class="w-6 h-6 rounded-full border cursor-pointer"
-                            @click="toggleColorPicker"
-                        ></div>
-
-                        <!-- Mini modal de cores -->
-                        <div
-                            v-if="showColorPicker"
-                            class="absolute top-8 right-0 bg-white p-2 rounded shadow flex gap-2"
-                        >
+                        <!-- Botão cor -->
+                        <div class="relative">
                             <div
-                                v-for="color in availableColors"
-                                :key="color.name"
-                                :style="{ backgroundColor: color.hex }"
-                                class="w-6 h-6 rounded-full cursor-pointer border"
-                                @click="changeTaskColor(color.hex)"
+                                :style="{ backgroundColor: selectedTask?.color }"
+                                class="w-6 h-6 rounded-full border cursor-pointer"
+                                @click="toggleColorPicker"
                             ></div>
+
+                            <div
+                                v-if="showColorPicker"
+                                class="absolute top-8 right-0 bg-white p-2 rounded shadow flex gap-2"
+                            >
+                                <div
+                                    v-for="color in availableColors"
+                                    :key="color.name"
+                                    :style="{ backgroundColor: color.hex }"
+                                    class="w-6 h-6 rounded-full cursor-pointer border"
+                                    @click="changeTaskColor(color.hex)"
+                                ></div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <p class="text-sm text-gray-700 mb-4">{{ selectedTask?.description }}</p>
+                    <!-- Descrição da task -->
+                    <p class="text-sm text-gray-700 mb-4">
+                        {{ selectedTask?.description }}
+                    </p>
 
-                <div class="text-xs text-gray-500 mb-2">
-                    <span v-if="selectedTask?.priority">Prioridade: {{ selectedTask.priority }} |</span>
-                    <span v-if="selectedTask?.status"> Status: {{ selectedTask.status }} |</span>
-                    <span v-if="selectedTask?.estimatedEndAt"> Estimativa: {{ formatDate(selectedTask.estimatedEndAt) }}</span>
-                </div>
+                    <!-- Infos adicionais -->
+                    <div class="text-xs text-gray-600 mb-4 space-x-2">
+                        <span v-if="selectedTask?.priority">Prioridade: {{ selectedTask.priority }}</span>
+                        <span v-if="selectedTask?.status">| Status: {{ selectedTask.status }}</span>
+                        <span v-if="selectedTask?.estimatedEndAt">| Estimativa: {{ formatDate(selectedTask.estimatedEndAt) }}</span>
+                    </div>
 
-                <div class="mt-4 flex gap-2">
-                    <button
-                        class="bg-blue-500 text-white py-2 px-4 rounded mr-5"
-                        @click="goEditTask(selectedTask)"
-                    >
-                        Editar
-                    </button>
-                    <button
-                        class="bg-gray-300 text-gray-700 py-2 px-4 rounded"
-                        @click="closeDetail"
-                    >
-                        Fechar
-                    </button>
-                    <button
-                        class="ml-auto bg-red-500 text-white py-2 px-4 rounded flex items-center"
-                        @click="confirmDeleteTask"
-                    >
-                        <span class="material-icons">delete</span>
-                    </button>
+                    <!-- Ações -->
+                    <div class="flex items-center gap-2">
+                        <button
+                            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition"
+                            @click="goEditTask(selectedTask)"
+                        >
+                            Editar
+                        </button>
+                        <button
+                            class="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded transition"
+                            @click="closeDetail"
+                        >
+                            Fechar
+                        </button>
+                        <button
+                            class="ml-auto bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded flex items-center transition"
+                            @click="confirmDeleteTask"
+                        >
+                            <span class="material-icons">delete</span>
+                        </button>
+                    </div>
                 </div>
             </div>
+        </transition>
 
-            <!-- Modal de confirmação de exclusão-->
+        <!-- Modal de confirmação de delete -->
+        <transition name="fade">
             <div
                 v-if="showDeleteModal"
-                class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+                class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
                 @click.self="closeDeleteModal"
             >
-                <div class="bg-white p-6 rounded shadow w-full max-w-sm">
+                <div class="bg-white p-6 rounded shadow-md w-full max-w-sm">
                     <h2 class="text-lg font-bold mb-4">Confirmar Exclusão</h2>
                     <p>Você tem certeza que deseja excluir esta tarefa?</p>
-
                     <div class="mt-4 flex justify-end gap-2">
                         <button
-                            class="bg-gray-300 text-gray-700 py-2 px-4 rounded"
+                            class="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded transition"
                             @click="closeDeleteModal"
                         >
                             Cancelar
                         </button>
                         <button
-                            class="bg-red-500 text-white py-2 px-4 rounded"
+                            class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded transition"
                             @click="deleteTask"
                         >
                             Excluir
@@ -270,8 +281,9 @@ async function changeTaskColor(color: string) {
                     </div>
                 </div>
             </div>
-        </div>
+        </transition>
 
+        <!-- Modal de adicionar task -->
         <AddTask
             v-if="showAddTaskModal"
             @close="showAddTaskModal = false"
@@ -279,4 +291,16 @@ async function changeTaskColor(color: string) {
         />
     </div>
 </template>
+
+<style scoped>
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.2s ease;
+}
+</style>
+
 

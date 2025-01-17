@@ -52,8 +52,8 @@ async function doLogin() {
                 <label class="block font-medium">Password</label>
                 <input v-model="password" type="password" class="border rounded w-full p-2" />
             </div>
-            <div class="flex items-center gap-2">
-                <input v-model="isRememberMe" type="checkbox" />
+            <div class="flex items-center gap-2 hidden">
+                <input v-model="isRememberMe" type="checkbox" value="false"/>
                 <span>Remember me</span>
             </div>
 
