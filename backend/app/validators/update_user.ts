@@ -3,6 +3,18 @@ import { uniqueRule } from '#rules/unique'
 import { cpfRule } from '#rules/cpf'
 
 const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{4,}$/
+const messages = {
+    'email.email': 'Informe um e-mail válido.',
+    'username.minLength': 'O username deve ter pelo menos 3 caracteres.',
+    'username.maxLength': 'O username deve ter no máximo 24 caracteres.',
+    'newPassword.regex': 'A nova senha precisa de maiúscula, minúscula, número e especial.',
+    'newPassword.minLength': 'A nova senha precisa de pelo menos 8 dígitos.',
+    'newPassword.maxLength': 'A nova senha precisa, no máximo, de 32 dígitos.',
+    'cpf.minLength': 'Um CPF válido tem 11 dígitos.',
+    'cpf.maxLength': 'Um CPF válido tem 11 dígitos.',
+}
+
+vine.messagesProvider = new SimpleMessagesProvider(messages)
 
 export const updateUserValidator = vine.compile(
     vine.object({
@@ -42,14 +54,3 @@ export const updateUserValidator = vine.compile(
             .requiredIfExists('oldPassword'),
     })
 )
-
-const messages = {
-    'email.email': 'Informe um e-mail válido.',
-    'username.minLength': 'O username deve ter pelo menos 3 caracteres.',
-    'username.maxLength': 'O username deve ter no máximo 24 caracteres.',
-    'newPassword.regex': 'A nova senha precisa de maiúscula, minúscula, número e especial.',
-    'newPassword.minLength': 'A nova senha precisa de pelo menos 8 dígitos.',
-    'newPassword.maxLength': 'A nova senha precisa, no máximo, de 32 dígitos.',
-}
-
-vine.messagesProvider = new SimpleMessagesProvider(messages)
