@@ -9,6 +9,8 @@
         "build": "node ace build",
         "dev": "node ace serve --hmr",
         "test": "node ace test",
+        "test-func": "node ace test functional",
+        "test-unit": "node ace test unit",
         "lint": "eslint .",
         "format": "prettier --write .",
         "typecheck": "tsc --noEmit"
