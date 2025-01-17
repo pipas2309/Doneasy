@@ -71,7 +71,7 @@ async function updateProfile() {
         })
         successMessage.value = 'Perfil atualizado com sucesso!'
     } catch (err: any) {
-        errorMessage.value = err?.data?.message || 'Falha ao atualizar perfil'
+        errorMessage.value = err?.data?.errors[0].message || 'Falha ao atualizar perfil'
     }
 }
 
@@ -96,60 +96,92 @@ async function changePassword() {
         oldPassword.value = ''
         newPassword.value = ''
     } catch (err: any) {
-        errorMessage.value = err?.data?.message || 'Falha ao alterar senha'
+        errorMessage.value = err?.data.errors[0].message || 'Falha ao alterar senha'
     }
 }
 </script>
 
 <template>
-    <div>
-        <h1 class="text-2xl mb-4">Meu Perfil</h1>
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-md shadow space-y-8">
+        <div>
+            <h1 class="text-2xl font-bold mb-2">Meu Perfil</h1>
 
-        <div v-if="errorMessage" class="text-red-500 mb-2">
-            {{ errorMessage }}
+            <div v-if="errorMessage" class="text-red-500 mb-2">
+                {{ errorMessage }}
+            </div>
+            <div v-if="successMessage" class="text-green-500 mb-2">
+                {{ successMessage }}
+            </div>
+
+            <form @submit.prevent="updateProfile" class="space-y-4">
+                <div>
+                    <label class="block font-semibold">Email</label>
+                    <input
+                        v-model="email"
+                        type="text"
+                        class="border w-full p-2 rounded focus:outline-none focus:ring focus:ring-blue-300"
+                    />
+                </div>
+                <div>
+                    <label class="block font-semibold">Username</label>
+                    <input
+                        v-model="username"
+                        type="text"
+                        class="border w-full p-2 rounded focus:outline-none focus:ring focus:ring-blue-300"
+                    />
+                </div>
+                <div>
+                    <label class="block font-semibold">Full Name</label>
+                    <input
+                        v-model="fullName"
+                        type="text"
+                        class="border w-full p-2 rounded focus:outline-none focus:ring focus:ring-blue-300"
+                    />
+                </div>
+                <div>
+                    <label class="block font-semibold">CPF</label>
+                    <input
+                        v-model="cpf"
+                        type="text"
+                        class="border w-full p-2 rounded focus:outline-none focus:ring focus:ring-blue-300"
+                    />
+                </div>
+
+                <button
+                    type="submit"
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition"
+                >
+                    Atualizar Perfil
+                </button>
+            </form>
         </div>
-        <div v-if="successMessage" class="text-green-500 mb-2">
-            {{ successMessage }}
-        </div>
 
-        <!-- Form p/ atualizar campos de perfil -->
-        <form @submit.prevent="updateProfile" class="space-y-2 max-w-md">
-            <div>
-                <label>Email</label>
-                <input v-model="email" type="text" class="border p-2 w-full" />
+        <div>
+            <h2 class="text-xl font-bold mb-2">Trocar Senha</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block font-semibold">Senha Antiga</label>
+                    <input
+                        v-model="oldPassword"
+                        type="password"
+                        class="border w-full p-2 rounded focus:outline-none focus:ring focus:ring-blue-300"
+                    />
+                </div>
+                <div>
+                    <label class="block font-semibold">Nova Senha</label>
+                    <input
+                        v-model="newPassword"
+                        type="password"
+                        class="border w-full p-2 rounded focus:outline-none focus:ring focus:ring-blue-300"
+                    />
+                </div>
+                <button
+                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded transition"
+                    @click="changePassword"
+                >
+                    Alterar Senha
+                </button>
             </div>
-            <div>
-                <label>Username</label>
-                <input v-model="username" type="text" class="border p-2 w-full" />
-            </div>
-            <div>
-                <label>Full Name</label>
-                <input v-model="fullName" type="text" class="border p-2 w-full" />
-            </div>
-            <div>
-                <label>CPF</label>
-                <input v-model="cpf" type="text" class="border p-2 w-full" />
-            </div>
-
-            <button class="bg-blue-500 text-white px-4 py-2 rounded mt-2" type="submit">
-                Atualizar Perfil
-            </button>
-        </form>
-
-        <!-- Form p/ trocar senha -->
-        <div class="mt-8 max-w-md space-y-2">
-            <h2 class="text-xl">Trocar Senha</h2>
-            <div>
-                <label>Senha Antiga</label>
-                <input v-model="oldPassword" type="password" class="border p-2 w-full" />
-            </div>
-            <div>
-                <label>Nova Senha</label>
-                <input v-model="newPassword" type="password" class="border p-2 w-full" />
-            </div>
-            <button class="bg-green-500 text-white px-4 py-2 rounded" @click="changePassword">
-                Alterar Senha
-            </button>
         </div>
     </div>
 </template>
